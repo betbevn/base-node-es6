@@ -2,7 +2,7 @@ import express from "express";
 import cookieParser from "cookie-parser";
 import logger from "morgan";
 import * as dotenv from "dotenv";
-import routes from "./routes";
+import routes from "./controllers";
 import { connectDB } from "./models";
 
 dotenv.config({ path: `.env.${process.env.NODE_ENV}` });
@@ -14,6 +14,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
+routes.auth(app);
 routes.users(app);
 
 connectDB()

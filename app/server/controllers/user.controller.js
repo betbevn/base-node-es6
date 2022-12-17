@@ -1,18 +1,17 @@
-import models from "../models";
+import express from "express";
+import { authenticateToken } from "../middlewares/auth.middleware";
+import users from "../services/user.service";
+const router = express.Router();
 
-const UserRepository = models.User;
+const UserController = (app) => {
+  router.get("/", (req, res) => {
+    users.findAll(req, res);
+  });
+  router.get("/:id", authenticateToken, (req, res) => {
+    users.findOneById(req, res);
+  });
 
-const findAll = async (req, res) => {
-  const users = await UserRepository.find();
-  res.send(users);
+  app.use("/api/users", router);
 };
 
-const create = async (req, res) => {
-  const newUserRepository = new UserRepository(req.body);
-  const user = await newUserRepository.save();
-  res.send(user);
-};
-
-const userController = { findAll, create };
-
-export default userController;
+export default UserController;
