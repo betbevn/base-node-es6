@@ -9,6 +9,9 @@ const AuthController = (app) => {
   router.post("/signup", (req, res) => {
     auth.signup(req, res);
   });
+  router.post("/logout", (req, res) => {
+    auth.logout(req, res);
+  });
 
   app.use("/api/auth", router);
 };
