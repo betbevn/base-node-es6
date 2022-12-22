@@ -27,6 +27,8 @@ const login = async (req, res) => {
 const signup = async (req, res) => {
   const isUserExisted = await UserRepository.findOne({ email: req.body.email });
 
+  console.log(req.body, "req.body");
+
   if (isUserExisted) {
     res.send({ data: "", message: "User existed!" });
     return;
