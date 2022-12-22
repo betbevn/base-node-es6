@@ -15,7 +15,12 @@ function getToken() {
       "Content-Type": "application/json",
     },
   };
-  fetch(url, options).then(getUsers).then(console.log).catch(console.error);
+
+  document.cookie
+    .fetch(url, options)
+    .then(getUsers)
+    .then(console.log)
+    .catch(console.error);
 }
 
 async function getUsers(response) {
