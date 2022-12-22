@@ -1,13 +1,21 @@
-import express from "express";
 import cookieParser from "cookie-parser";
-import logger from "morgan";
+import cors from "cors";
 import * as dotenv from "dotenv";
+import express from "express";
+import logger from "morgan";
 import routes from "./controllers";
 import { connectDB } from "./models";
 
 dotenv.config({ path: `.env.${process.env.NODE_ENV}` });
 
 const app = express();
+
+app.use(
+  cors({
+    origin: ["http://localhost:5500"],
+    credentials: true, // Enable cookie HTTP via CORS
+  })
+);
 
 app.use(logger("dev"));
 app.use(express.json());
