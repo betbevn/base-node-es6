@@ -4,7 +4,7 @@ window.addEventListener("load", () => {
 });
 
 function getToken() {
-  const url = "http://localhost:8080/api/auth/login";
+  const url = "http://localhost:6868/api/auth/login";
   const options = {
     method: "POST",
     body: JSON.stringify({
@@ -16,18 +16,15 @@ function getToken() {
     },
   };
 
-  document.cookie
-    .fetch(url, options)
-    .then(getUsers)
-    .then(console.log)
-    .catch(console.error);
+  fetch(url, options).then(getUsers).then(console.log).catch(console.error);
 }
 
 async function getUsers(response) {
+  q;
   const data = await response.json();
   const token = data.data.token;
 
-  const url = "http://localhost:8080/api/users/63a46548efb9dbc77425401b";
+  const url = "http://localhost:6868/api/users/63a46548efb9dbc77425401b";
   const options = {
     method: "GET",
     headers: {
@@ -43,7 +40,7 @@ async function getUsers(response) {
 // }
 
 // function logOut() {
-//   const url = "http://localhost:8080/api/auth/logout";
+//   const url = "http://localhost:6868/api/auth/logout";
 //   const options = {
 //     method: "POST",
 //     credentials: "include",
