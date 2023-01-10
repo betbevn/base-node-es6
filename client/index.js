@@ -1,5 +1,5 @@
 window.addEventListener("load", () => {
-  console.log("Everything start here!");
+  console.log("Begin!");
   getToken();
 });
 
