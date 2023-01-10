@@ -20,7 +20,6 @@ function getToken() {
 }
 
 async function getUsers(response) {
-  q;
   const data = await response.json();
   const token = data.data.token;
 
