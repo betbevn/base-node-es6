@@ -12,7 +12,7 @@ const app = express();
 
 app.use(
   cors({
-    origin: ["http://localhost:5500"],
+    origin: ["http://localhost:5500", "http://localhost:8181"],
     credentials: true, // Enable cookie HTTP via CORS
   })
 );
