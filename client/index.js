@@ -1,9 +1,9 @@
 window.addEventListener("load", () => {
   console.log("Begin!");
-  getToken();
+  login();
 });
 
-function getToken() {
+function login() {
   const url = "http://localhost:6868/api/auth/login";
   const options = {
     method: "POST",
