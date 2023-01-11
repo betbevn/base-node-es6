@@ -12,7 +12,7 @@ const login = async (req, res) => {
   } else if (user.validatePassword(req.body.password)) {
     const token = generateToken(user);
     res.cookie("access_token", token, {
-      maxAge: new Date(Date.now() + 5 * 60 * 1000), // milliseconds
+      maxAge: 1 * 60 * 60 * 1000, // milliseconds
       httpOnly: true,
       // secure: true;
     });
@@ -42,7 +42,7 @@ const signup = async (req, res) => {
   const user = await newUser.save();
   const token = generateToken(user);
   res.cookie("access_token", token, {
-    maxAge: new Date(Date.now() + 5 * 60 * 1000), // milliseconds
+    maxAge: 1 * 60 * 60 * 1000, // milliseconds
     httpOnly: true,
     // secure: true;
   });

@@ -40,8 +40,7 @@ function login() {
 
 async function getUsers(response) {
   let data = await response.json();
-  const user = data.data.user;
-
+  const user = data.data;
   const url = `http://localhost:6868/api/users/${user._id}`;
   const options = {
     credentials: "include",
