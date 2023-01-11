@@ -16,7 +16,7 @@ const login = async (req, res) => {
       httpOnly: true,
       // secure: true;
     });
-    res.status(200).json({ ...req.body });
+    res.status(200).json({ message: "Logged in successfully!", data: user });
   } else {
     res.status(400).send({
       message: "Invalid Email or Password!",
