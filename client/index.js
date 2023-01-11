@@ -1,9 +1,20 @@
-window.addEventListener("load", () => {
-  console.log("start client>>>");
-  getToken();
-});
+function signup() {
+  const url = "http://localhost:8080/api/auth/signup";
+  const options = {
+    method: "POST",
+    body: JSON.stringify({
+      email: "betbevn@gmail.com",
+      password: "1234",
+    }),
+    headers: {
+      "Content-Type": "application/json",
+    },
+    credentials: "include",
+  };
+  fetch(url, options).then(getUsers).then(console.log).catch(console.error);
+}
 
-function getToken() {
+function login() {
   const url = "http://localhost:8080/api/auth/login";
   const options = {
     method: "POST",

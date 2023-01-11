@@ -9,5 +9,31 @@
   </head>
   <body>
     <h1>Hello C2 Demo</h1>
+
+    <div style="display: flex; justify-content: center">
+      <form id="myForm" action="#">
+        <div style="margin: 20px">
+          <input id="email" type="text" placeholder="email" name="email" />
+        </div>
+        <div style="margin: 20px">
+          <input
+            id="password"
+            type="password"
+            placeholder="password"
+            name="password"
+          />
+        </div>
+        <div id="error-message" style="color: red; margin: 20px"></div>
+        <div style="display: flex; justify-content: end; margin: 20px">
+          <input type="button" value="Sign up" onclick="signup()" />
+          <input
+            type="button"
+            value="Login"
+            onclick="login()"
+            style="margin-left: 5px"
+          />
+        </div>
+      </form>
+    </div>
   </body>
 </html>
