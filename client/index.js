@@ -1,12 +1,12 @@
 function login() {
-  const username = document.getElementById("email").value;
+  const email = document.getElementById("email").value;
   const password = document.getElementById("password").value;
 
   const url = "http://localhost:6868/api/auth/login";
   const options = {
     method: "POST",
     body: JSON.stringify({
-      email: username,
+      email: email,
       password: password,
     }),
     headers: {
@@ -23,14 +23,14 @@ function login() {
 }
 
 function signup() {
-  const username = document.getElementById("email").value;
+  const email = document.getElementById("email").value;
   const password = document.getElementById("password").value;
 
   const url = "http://localhost:6868/api/auth/signup";
   const options = {
     method: "POST",
     body: JSON.stringify({
-      username: username,
+      email: email,
       password: password,
     }),
     headers: {
@@ -46,13 +46,7 @@ function signup() {
 }
 
 async function getUsers(response) {
-  let data;
-  try {
-    data = await response.json();
-  } catch (error) {
-    console.log(error, "error");
-  }
-
+  let data = await response.json();
   const token = data.data.token;
   const user = data.data.user;
 
