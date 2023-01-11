@@ -16,6 +16,7 @@ const login = async (req, res) => {
     res.status(200).send({
       message: "User Logged In",
       data: {
+        user,
         token,
       },
     });
@@ -36,14 +37,14 @@ const signup = async (req, res) => {
 
   const newUser = new UserRepository();
 
-  newUser.userName = req.body.userName;
-  newUser.email = req.body.email;
+  newUser.email = req.body.email ?? req.body.username;
+  newUser.setPassword(req.body.password);
+  newUser.username = req.body.username;
   newUser.title = req.body.title;
   newUser.bio = req.body.bio;
-  newUser.setPassword(req.body.password);
 
   const user = await newUser.save();
-  res.send({ data: user, message: "" });
+  res.send({ data: user, message: "User was created!" });
 };
 
 const authController = { login, signup };
