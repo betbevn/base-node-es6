@@ -1,26 +1,32 @@
 function signup() {
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
+
   const url = "http://localhost:8080/api/auth/signup";
   const options = {
     method: "POST",
     body: JSON.stringify({
-      email: "betbevn@gmail.com",
-      password: "1234",
+      email: email,
+      password: password,
     }),
     headers: {
       "Content-Type": "application/json",
     },
     credentials: "include",
   };
-  fetch(url, options).then(getUsers).then(console.log).catch(console.error);
+  fetch(url, options).then(console.log).catch(console.error);
 }
 
 function login() {
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
+
   const url = "http://localhost:8080/api/auth/login";
   const options = {
     method: "POST",
     body: JSON.stringify({
-      email: "betbevn@gmail.com",
-      password: "1234",
+      email: email,
+      password: password,
     }),
     headers: {
       "Content-Type": "application/json",
