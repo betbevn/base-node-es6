@@ -1,5 +1,5 @@
 function login() {
-  const username = document.getElementById("username").value;
+  const username = document.getElementById("email").value;
   const password = document.getElementById("password").value;
 
   const url = "http://localhost:6868/api/auth/login";
@@ -23,7 +23,7 @@ function login() {
 }
 
 function signup() {
-  const username = document.getElementById("username").value;
+  const username = document.getElementById("email").value;
   const password = document.getElementById("password").value;
 
   const url = "http://localhost:6868/api/auth/signup";
@@ -81,6 +81,6 @@ async function getUsers(response) {
 // }
 
 function resetForm() {
-  document.getElementById("username").value = "";
+  document.getElementById("email").value = "";
   document.getElementById("password").value = "";
 }
