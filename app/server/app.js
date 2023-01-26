@@ -11,13 +11,17 @@ dotenv.config({ path: `.env.${process.env.NODE_ENV}` });
 const app = express();
 
 app.use(logger("dev"));
-app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
 app.use(cookieParser());
 
 app.use(
   cors({
-    origin: ["http://localhost:5500", "http://localhost:8181"],
+    origin: [
+      "http://localhost:5500",
+      "http://localhost:8181",
+      "https://localhost:8843",
+    ],
     credentials: true, // Enable cookie HTTP via CORS
   })
 );

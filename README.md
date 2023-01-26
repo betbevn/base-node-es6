@@ -41,3 +41,19 @@ In order to run a Back End, you need to have a already database. For this projec
   ```
   - cd to app folder then run this command **yarn start:dev**
   - API end point: http://localhost:8080/api
+
+# SAML (Security Assertion Markup Language)
+
+## Concept
+
+- It's an XML based open standard for transferring identity data between two parties.
+- The two parties being an identity provider and a service provider
+- https://www.youtube.com/watch?v=eaIGGO_NQJA
+
+## Benefits
+
+- Improved user experience users only have to log in one time and be able to get access to multiple service providers
+- Offers increased security. SAML gives you a signle point of authentication that happens with a secure identity provider.
+  SAML transfers the identity information to the service providers, this ensures that the credentials are only sent to the
+  identity provider directly, it loosens the decoupling of directories.
+- Reduced costs for service providers. With SAML you do not have maintain account information across multiple different Services

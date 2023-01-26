@@ -1,6 +1,22 @@
 version: "3.8"
 
 services:
+  # keycloak:
+  #   image: quay.io/keycloak/keycloak:20.0.3
+  #   restart: unless-stopped
+  #   env_file: ./.env
+  #   environment:
+  #     - KEYCLOAK_ADMIN=$KEYCLOAK_ADMIN
+  #     - KEYCLOAK_ADMIN_PASSWORD=$KEYCLOAK_ADMIN_PASSWORD
+  #     - KC_HTTPS_CERTIFICATE_FILE=$KC_HTTPS_CERTIFICATE_FILE
+  #     - KC_HTTPS_CERTIFICATE_KEY_FILE=$KC_HTTPS_CERTIFICATE_KEY_FILE
+  #   volumes:
+  #     - ./certs/idp:/opt/keycloak/conf
+  #   command:
+  #     - start-dev
+  #   ports: 
+  #     - 8843:8443
+  #     - 8890:8080
   client:
     build: ./client
     restart: unless-stopped
