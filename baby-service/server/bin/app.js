@@ -4,14 +4,23 @@
  * Module dependencies.
  */
 
-import app from "../app";
+import routes from "../controllers";
 import debugLib from "debug";
+import logger from "morgan";
+import cookieParser from "cookie-parser";
+import express from "express";
+import https from "https";
+import session from "express-session";
+import passport from "passport";
+import fs from "fs";
+import * as dotenv from "dotenv";
+
+const saml = require("@node-saml/passport-saml");
 const debug = debugLib("node-training-es6:server");
-const https = require("https");
-const session = require("express-session");
-const passport = require("passport");
-const saml = require("passport-saml");
-const fs = require("fs");
+
+dotenv.config({ path: `.env.${process.env.NODE_ENV}` });
+
+const app = express();
 
 /** SAML Configurations attributes
  * callbackurl : apps url for IDP to response post authetication
@@ -21,27 +30,26 @@ const fs = require("fs");
  */
 const samlConfig = {
   issuer: "c2-sso",
-  entityId: "Saml-SSO-App",
-  callbackUrl: "https://localhost:6868/api/auth/login/callback",
-  signOut: "https://localhost:6868/api/auth/signout/callback",
+  entityId: "https://localhost:8843/realms/c2-applications",
+  callbackUrl: "https://localhost:5858/api/baby/callback",
+  signOut: "https://localhost:5858/api/baby/signout/callback",
   entryPoint: "https://localhost:8843/realms/c2-applications/protocol/saml",
 };
 
 // For running apps on https mode
 // load the public certificate
-const sp_pub_cert = fs.readFileSync(
-  "../app/server/certs/sp-pub.cert.pem",
-  "utf8"
-);
+
+const idpPubKey = "../app/server/certs/idp-pub.key.pem";
+const spPubCert = "../app/server/certs/sp-pub-cert.pem";
+const spPvtKey = "../app/server/certs/sp-pvt-key.pem";
+
+const sp_pub_cert = fs.readFileSync(spPubCert, "utf8");
 
 //load the private key
-const sp_pvk_key = fs.readFileSync(
-  "../app/server/certs/sp-pvt.key.pem",
-  "utf8"
-);
+const sp_pvk_key = fs.readFileSync(spPvtKey, "utf8");
 
 //Idp's certificate from metadata
-const idp_cert = fs.readFileSync("../app/server/certs/idp-pub.key.pem", "utf8");
+const idp_cert = fs.readFileSync(idpPubKey, "utf8");
 
 passport.serializeUser(function (user, done) {
   //Serialize user, console.log if needed
@@ -62,7 +70,7 @@ const samlStrategy = new saml.Strategy(
     identifierFormat: null,
     decryptionPvk: sp_pvk_key,
     cert: [idp_cert, idp_cert],
-    privateCert: fs.readFileSync("../app/server/certs/sp-pvt.key.pem", "utf8"),
+    privateCert: fs.readFileSync(spPvtKey, "utf8"),
     validateInResponseTo: true,
     disableRequestedAuthnContext: true,
   },
@@ -71,6 +79,10 @@ const samlStrategy = new saml.Strategy(
     return done(null, profile);
   }
 );
+app.use(logger("dev"));
+app.use(cookieParser());
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
 
 // configure session management
 // Note: Always configure session before passport initialization & passport session, else error will be encounter
@@ -85,6 +97,8 @@ app.use(
 passport.use("samlStrategy", samlStrategy);
 app.use(passport.initialize({}));
 app.use(passport.session({}));
+
+routes.baby(app);
 
 /**
  * Get port from environment and store in Express.

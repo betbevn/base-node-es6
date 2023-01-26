@@ -57,3 +57,21 @@ In order to run a Back End, you need to have a already database. For this projec
   SAML transfers the identity information to the service providers, this ensures that the credentials are only sent to the
   identity provider directly, it loosens the decoupling of directories.
 - Reduced costs for service providers. With SAML you do not have maintain account information across multiple different Services
+
+# Setting up OpensSSL
+
+Generate the self-sign certificate for IDP (Keycloak) to run in HTTPS mode
+
+```bash
+openssl req -newkey rsa:2048 -nodes  -keyout idp-server.key.pem -x509 -days 3650 -out idp-server.crt.pem
+
+chmod 755 idp-server.crt.pem
+chmod 755 idp-server.key.pem
+
+```
+
+Service Provider (NodeJs) app will also require a key/certificate for encryption and decryption of packets
+
+```bash
+openssl req -newkey rsa:2048 -nodes  -keyout sp-pvt.key.pem -x509 -days 3650 -out sp-pub.cert.pem
+```
