@@ -6,7 +6,7 @@
     "start:dev": "npm run dev",
     "start:docker": "npm run docker",
     "build": "npm-run-all clean transpile",
-    "server": "node ./build/bin/www",
+    "server": "node ./build/bin/app",
     "dev": "NODE_ENV=development npm-run-all build server",
     "docker": "NODE_ENV=docker npm-run-all build server",
     "//transpile": "babel ./server --out-dir build",
