@@ -1,11 +1,13 @@
 version: "3.8"
 
+name: base-node-es6-jwt-with-private-public-key
 services:
   client:
     build: ./client
     restart: unless-stopped
+    env_file: ./.env
     ports: 
-      - 8181:80
+      - $CLIENT_LOCAL_PORT:$CLIENT_DOCKER_PORT
   mongodb:
     image: mongo:5.0.2
     restart: unless-stopped
