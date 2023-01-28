@@ -47,4 +47,4 @@ In order to run a Back End, you need to have a already database. For this projec
 
   # Diagram for jwt and pbulic/private keys
 
-  [Diagram](https://app.diagrams.net/#G1jZLJSN-uofARwPeEUqH7qE7CWQa833Ff)
+  [Diagram](https://drive.google.com/file/d/1jZLJSN-uofARwPeEUqH7qE7CWQa833Ff/view?usp=sharing)
