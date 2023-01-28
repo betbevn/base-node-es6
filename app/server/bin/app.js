@@ -4,9 +4,9 @@
  * Module dependencies.
  */
 
-import debugLib from "debug";
 import cookieParser from "cookie-parser";
 import cors from "cors";
+import debugLib from "debug";
 import * as dotenv from "dotenv";
 import express from "express";
 import logger from "morgan";
