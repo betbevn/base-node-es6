@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import crypto from "crypto";
+import { encryptPrivateKey } from "../utils/crypto.util";
 
 const UserSchema = new mongoose.Schema(
   {
@@ -17,24 +17,19 @@ const UserSchema = new mongoose.Schema(
     bio: {
       type: String,
     },
-    hash: {
+    encryptedPrivateKey: {
       type: String,
-    },
-    salt: {
-      type: String,
+      required: true,
     },
   },
   { timestamps: true }
 );
 
-UserSchema.methods.setPassword = function (password) {
-  this.salt = crypto.randomBytes(16).toString("hex");
-  this.hash = crypto
-    .pbkdf2Sync(password, this.salt, 1000, 64, "sha512")
-    .toString("hex");
+UserSchema.methods.encryptPrivateKey = function (password) {
+  this.encryptedPrivateKey = encryptPrivateKey("", password);
 };
 
-UserSchema.methods.validatePassword = function (password) {
+UserSchema.methods.decryptPrivateKey = function (password) {
   const hash = crypto
     .pbkdf2Sync(password, this.salt, 1000, 64, "sha512")
     .toString("hex");

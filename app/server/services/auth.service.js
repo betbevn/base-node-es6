@@ -38,7 +38,6 @@ const signup = async (req, res) => {
   const newUser = new UserRepository();
 
   newUser.email = req.body.email;
-  newUser.setPassword(req.body.password);
   newUser.username = req.body.username;
   newUser.title = req.body.title;
   newUser.bio = req.body.bio;
