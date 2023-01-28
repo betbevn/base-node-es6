@@ -1,5 +1,6 @@
 import jwt from "jsonwebtoken";
 import models from "../models";
+import { makeAuthSignature, verifyAuthSignature } from "../utils/crypto.util";
 
 const UserRepository = models.User;
 
@@ -9,8 +10,16 @@ const login = async (req, res) => {
     res.status(400).send({
       message: "User not found.",
     });
-  } else if (user.validatePassword(req.body.password)) {
-    const token = jwt.sign(user.toJSON(), "secretkeyappearshere", {
+  }
+
+  const privateKey = user.decryptPrivateKey(req.body.password);
+
+  const [message, signature] = makeAuthSignature(privateKey);
+
+  const secret = message + signature;
+
+  if (verifyAuthSignature(req.body.publicKey, message, signature)) {
+    const token = jwt.sign(user.toJSON(), secret, {
       expiresIn: "1h",
     });
     res.status(200).send({
@@ -37,6 +46,7 @@ const signup = async (req, res) => {
 
   const newUser = new UserRepository();
 
+  newUser.encryptPrivateKey(req.body.password);
   newUser.email = req.body.email;
   newUser.username = req.body.username;
   newUser.title = req.body.title;

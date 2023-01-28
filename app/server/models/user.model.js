@@ -1,5 +1,10 @@
+import fs from "fs";
 import mongoose from "mongoose";
-import { encryptPrivateKey } from "../utils/crypto.util";
+import {
+  decryptPrivateKey,
+  encryptPrivateKey,
+  getPrivateKeyFromPem,
+} from "../utils/crypto.util";
 
 const UserSchema = new mongoose.Schema(
   {
@@ -26,14 +31,16 @@ const UserSchema = new mongoose.Schema(
 );
 
 UserSchema.methods.encryptPrivateKey = function (password) {
-  this.encryptedPrivateKey = encryptPrivateKey("", password);
+  const privateKeyPem = fs.readFileSync("../certs/key.pem", "utf8");
+
+  const privateKey = getPrivateKeyFromPem(privateKeyPem);
+
+  this.encryptedPrivateKey = encryptPrivateKey(privateKey, password);
 };
 
 UserSchema.methods.decryptPrivateKey = function (password) {
-  const hash = crypto
-    .pbkdf2Sync(password, this.salt, 1000, 64, "sha512")
-    .toString("hex");
-  return this.hash === hash;
+  const privateKey = decryptPrivateKey(this.encryptedPrivateKey, password);
+  return privateKey;
 };
 
 const User = mongoose.model("User", UserSchema);

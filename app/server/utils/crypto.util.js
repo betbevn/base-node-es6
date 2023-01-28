@@ -33,7 +33,7 @@ export const encryptPrivateKey = (privateKey, secret) =>
 export const decryptPrivateKey = (pemPrivateKey, secret) =>
   PKI.decryptRsaPrivateKey(pemPrivateKey, secret);
 
-export const makeAuthSignature = async (privateKey, secret) => {
+export const makeAuthSignature = (privateKey) => {
   const message = "Let me in " + Date.now();
   const md = MD.sha1.create();
   md.update(message, "utf8");
@@ -41,7 +41,7 @@ export const makeAuthSignature = async (privateKey, secret) => {
   return [message, signature];
 };
 
-export const verifyAuthSignature = async (publicKey, message, signature) => {
+export const verifyAuthSignature = (publicKey, message, signature) => {
   const md = MD.sha1.create();
   md.update(message, "utf8");
   const verification = publicKey.verify(md.digest().getBytes(), signature);
