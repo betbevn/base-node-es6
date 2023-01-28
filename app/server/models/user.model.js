@@ -41,7 +41,7 @@ UserSchema.methods.encryptPrivateKey = function (password) {
   this.encryptedPrivateKey = encryptPrivateKey(privateKey, password);
 };
 
-UserSchema.methods.decryptPrivateKey = function (password) {
+UserSchema.methods.recoveryPrivateKey = function (password) {
   const privateKey = decryptPrivateKey(this.encryptedPrivateKey, password);
   return privateKey;
 };

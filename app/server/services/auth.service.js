@@ -1,6 +1,10 @@
 import jwt from "jsonwebtoken";
 import models from "../models";
-import { makeAuthSignature, verifyAuthSignature } from "../utils/crypto.util";
+import {
+  makeAuthSignature,
+  verifyAuthSignature,
+  getPublicKeyFromPem,
+} from "../utils/crypto.util";
 
 const UserRepository = models.User;
 
@@ -12,14 +16,14 @@ const login = async (req, res) => {
     });
   }
 
-  const privateKey = user.decryptPrivateKey(req.body.password);
+  const privateKey = user.recoveryPrivateKey(req.body.password);
 
   const [message, signature] = makeAuthSignature(privateKey);
 
-  const secret = message + signature;
+  const publicKey = getPublicKeyFromPem(req.body.publicKey);
 
-  if (verifyAuthSignature(req.body.publicKey, message, signature)) {
-    const token = jwt.sign(user.toJSON(), secret, {
+  if (verifyAuthSignature(publicKey, message, signature)) {
+    const token = jwt.sign(user.toJSON(), signature, {
       expiresIn: "1h",
     });
     res.status(200).send({

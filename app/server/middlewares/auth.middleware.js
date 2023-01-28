@@ -1,6 +1,6 @@
 import fs from "fs";
 import jwt from "jsonwebtoken";
-import { makeAuthSignature } from "../utils/crypto.util";
+import { makeAuthSignature, getPrivateKeyFromPem } from "../utils/crypto.util";
 
 export function authenticateToken(req, res, next) {
   const authHeader = req.headers["authorization"];
@@ -19,9 +19,10 @@ export function authenticateToken(req, res, next) {
 
   const [message, signature] = makeAuthSignature(privateKey);
 
-  const secret = message + signature;
+  console.log(message, "message - jwt.verify");
+  console.log(signature, "signature - jwt.verify");
 
-  jwt.verify(token, secret, (err, user) => {
+  jwt.verify(token, signature, (err, user) => {
     if (err) {
       return res.sendStatus(403);
     }
