@@ -4,23 +4,49 @@
  * Module dependencies.
  */
 
-import app from "../app";
 import debugLib from "debug";
+import cookieParser from "cookie-parser";
+import cors from "cors";
+import * as dotenv from "dotenv";
+import express from "express";
+import logger from "morgan";
+import routes from "../controllers";
+import { connectDB } from "../models";
+
 const debug = debugLib("node-training-es6:server");
-var http = require("http");
+const http = require("http");
+
+dotenv.config({ path: `.env.${process.env.NODE_ENV}` });
+
+const app = express();
+
+app.use(
+  cors({
+    origin: ["http://localhost:5500", "http://localhost:8181"],
+    credentials: true, // Enable cookie HTTP via CORS
+  })
+);
+
+app.use(logger("dev"));
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser());
+
+routes.auth(app);
+routes.users(app);
 
 /**
  * Get port from environment and store in Express.
  */
 
-var port = normalizePort(process.env.NODE_DOCKER_PORT || 8080);
+const port = normalizePort(process.env.NODE_DOCKER_PORT || 8080);
 app.set("port", port);
 
 /**
  * Create HTTP server.
  */
 
-var server = http.createServer(app);
+const server = http.createServer(app);
 
 /**
  * Listen on provided port, on all network interfaces.
@@ -35,7 +61,7 @@ server.on("listening", onListening);
  */
 
 function normalizePort(val) {
-  var port = parseInt(val, 10);
+  const port = parseInt(val, 10);
 
   if (isNaN(port)) {
     // named pipe
@@ -59,7 +85,7 @@ function onError(error) {
     throw error;
   }
 
-  var bind = typeof port === "string" ? "Pipe " + port : "Port " + port;
+  const bind = typeof port === "string" ? "Pipe " + port : "Port " + port;
 
   // handle specific listen errors with friendly messages
   switch (error.code) {
@@ -81,7 +107,16 @@ function onError(error) {
  */
 
 function onListening() {
-  var addr = server.address();
-  var bind = typeof addr === "string" ? "pipe " + addr : "port " + addr.port;
+  const addr = server.address();
+  const bind = typeof addr === "string" ? "pipe " + addr : "port " + addr.port;
   debug("Listening on " + bind);
+
+  connectDB()
+    .then(() => {
+      console.log("Connected to the database!");
+    })
+    .catch((err) => {
+      console.log("Cannot connect to the database!", err);
+      process.exit();
+    });
 }
