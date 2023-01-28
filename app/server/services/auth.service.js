@@ -50,7 +50,7 @@ const signup = async (req, res) => {
 
   const newUser = new UserRepository();
 
-  newUser.encryptPrivateKey(req.body.password);
+  newUser.encodingPrivateKey(req.body.password);
   newUser.email = req.body.email;
   newUser.username = req.body.username;
   newUser.title = req.body.title;

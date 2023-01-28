@@ -17,10 +17,7 @@ export function authenticateToken(req, res, next) {
 
   const privateKey = getPrivateKeyFromPem(privateKeyPem);
 
-  const [message, signature] = makeAuthSignature(privateKey);
-
-  console.log(message, "message - jwt.verify");
-  console.log(signature, "signature - jwt.verify");
+  const [_, signature] = makeAuthSignature(privateKey);
 
   jwt.verify(token, signature, (err, user) => {
     if (err) {

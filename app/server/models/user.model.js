@@ -30,7 +30,7 @@ const UserSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-UserSchema.methods.encryptPrivateKey = function (password) {
+UserSchema.methods.encodingPrivateKey = function (password) {
   const privateKeyPem = fs.readFileSync(
     require.resolve("../certs/key.pem"),
     "utf8"

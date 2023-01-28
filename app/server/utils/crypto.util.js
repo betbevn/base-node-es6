@@ -34,7 +34,7 @@ export const decryptPrivateKey = (pemPrivateKey, secret) =>
   PKI.decryptRsaPrivateKey(pemPrivateKey, secret);
 
 export const makeAuthSignature = (privateKey) => {
-  const message = "Let me in " + Date.now();
+  const message = "Let me in";
   const md = MD.sha1.create();
   md.update(message, "utf8");
   const signature = privateKey.sign(md);
