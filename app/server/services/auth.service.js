@@ -20,6 +20,8 @@ const login = async (req, res) => {
 
   const [message, signature] = makeAuthSignature(privateKey);
 
+  console.log(signature, "signature");
+
   const publicKey = getPublicKeyFromPem(req.body.publicKey);
 
   if (verifyAuthSignature(publicKey, message, signature)) {

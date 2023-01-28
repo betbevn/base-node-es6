@@ -1,25 +1,7 @@
 import forge from "node-forge";
 
 const PKI = forge.pki;
-const RSA = forge.pki.rsa;
 const MD = forge.md;
-
-export const generateKeyPair = (opts) =>
-  new Promise((resolve, reject) => {
-    RSA.generateKeyPair(opts, (err, result) => {
-      if (err) {
-        reject(err);
-      } else {
-        resolve(result);
-      }
-    });
-  });
-
-export const makeKeyPair = () => generateKeyPair({ bits: 2048 });
-
-export const makePublicKeyPem = (publicKey) => PKI.publicKeyToPem(publicKey);
-
-export const makePrivateKeyPem = (publicKey) => PKI.privateKeyToPem(publicKey);
 
 export const getPublicKeyFromPem = (pemPublicKey) =>
   PKI.publicKeyFromPem(pemPublicKey);
