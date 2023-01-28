@@ -31,7 +31,10 @@ const UserSchema = new mongoose.Schema(
 );
 
 UserSchema.methods.encryptPrivateKey = function (password) {
-  const privateKeyPem = fs.readFileSync("../certs/key.pem", "utf8");
+  const privateKeyPem = fs.readFileSync(
+    require.resolve("../certs/key.pem"),
+    "utf8"
+  );
 
   const privateKey = getPrivateKeyFromPem(privateKeyPem);
 

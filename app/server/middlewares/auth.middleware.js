@@ -10,7 +10,10 @@ export function authenticateToken(req, res, next) {
     return res.sendStatus(401);
   }
 
-  const privateKeyPem = fs.readFileSync("../certs/key.pem", "utf8");
+  const privateKeyPem = fs.readFileSync(
+    require.resolve("../certs/key.pem"),
+    "utf8"
+  );
 
   const privateKey = getPrivateKeyFromPem(privateKeyPem);
 
