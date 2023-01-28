@@ -18,9 +18,13 @@ const login = async (req, res) => {
 
   const privateKey = user.recoveryPrivateKey(req.body.password);
 
-  const [message, signature] = makeAuthSignature(privateKey);
+  if (!privateKey) {
+    res.status(400).send({
+      message: "Invalid private key",
+    });
+  }
 
-  console.log(signature, "signature");
+  const [message, signature] = makeAuthSignature(privateKey);
 
   const publicKey = getPublicKeyFromPem(req.body.publicKey);
 

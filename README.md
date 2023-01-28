@@ -23,7 +23,9 @@ In order to run a Back End, you need to have a already database. For this projec
   - cd to app folder then run this command **yarn start:dev**
   - API end point: http://localhost:8080/api
 - Option 2:
+
   - You can make an other docker compose file then use this script below to set up a mongo database
+
   ```bash
     mongodb:
         image: mongo:5.0.2
@@ -39,5 +41,10 @@ In order to run a Back End, you need to have a already database. For this projec
     volumes:
         db:
   ```
+
   - cd to app folder then run this command **yarn start:dev**
   - API end point: http://localhost:8080/api
+
+  # Diagram for jwt and pbulic/private keys
+
+  [Diagram](https://app.diagrams.net/#G1jZLJSN-uofARwPeEUqH7qE7CWQa833Ff)
