@@ -44,7 +44,7 @@ In order to run a Back End, you need to have a already database. For this projec
 
 # SAML (Security Assertion Markup Language)
 
-## Concept
+## SSO's Concept
 
 - It's an XML based open standard for transferring identity data between two parties.
 - The two parties being an identity provider and a service provider
