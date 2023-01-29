@@ -1,13 +1,13 @@
+import fs from "fs";
 import jwt from "jsonwebtoken";
 import models from "../models";
 import {
-  makeAuthSignature,
-  verifyAuthSignature,
-  getPublicKeyFromPem,
   getPrivateKeyFromPem,
+  getPublicKeyFromPem,
+  makeAuthSignature,
   recoveryRawPasswordFromEncryptedPassword,
+  verifyAuthSignature,
 } from "../utils/crypto.util";
-import fs from "fs";
 
 const UserRepository = models.User;
 
