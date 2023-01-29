@@ -3,6 +3,11 @@ import forge from "node-forge";
 const PKI = forge.pki;
 const MD = forge.md;
 
+export const recoveryRawPasswordFromEncryptedPassword = (
+  privateKey,
+  password
+) => privateKey.decrypt(password, "RSAES-PKCS1-V1_5");
+
 export const getPublicKeyFromPem = (pemPublicKey) =>
   PKI.publicKeyFromPem(pemPublicKey);
 

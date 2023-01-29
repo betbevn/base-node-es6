@@ -4,7 +4,10 @@ import {
   makeAuthSignature,
   verifyAuthSignature,
   getPublicKeyFromPem,
+  getPrivateKeyFromPem,
+  recoveryRawPasswordFromEncryptedPassword,
 } from "../utils/crypto.util";
+import fs from "fs";
 
 const UserRepository = models.User;
 
@@ -16,7 +19,34 @@ const login = async (req, res) => {
     });
   }
 
-  const privateKey = user.recoveryPrivateKey(req.body.password);
+  if (!req.body.publicKey) {
+    res.status(400).send({
+      message: "Invalid public key",
+    });
+  }
+
+  if (!req.body.encryptedPassword) {
+    res.status(400).send({
+      message: "Invalid encrypted password",
+    });
+  }
+
+  // Get privateKeyPem from local server
+  const privateKeyPem = fs.readFileSync(
+    require.resolve("../certs/key.pem"),
+    "utf8"
+  );
+
+  // Get privateKey from privateKeyPem
+  const privateKeyFromServer = getPrivateKeyFromPem(privateKeyPem);
+
+  // Recovery raw password from encrypted password
+  const password = recoveryRawPasswordFromEncryptedPassword(
+    privateKeyFromServer,
+    req.body.encryptedPassword
+  );
+
+  const privateKey = user.recoveryPrivateKey(password);
 
   if (!privateKey) {
     res.status(400).send({
@@ -54,9 +84,30 @@ const signup = async (req, res) => {
     return;
   }
 
+  if (!req.body.encryptedPassword) {
+    res.status(400).send({
+      message: "Invalid encrypted password",
+    });
+  }
+
+  // Get privateKeyPem from local server
+  const privateKeyPem = fs.readFileSync(
+    require.resolve("../certs/key.pem"),
+    "utf8"
+  );
+
+  // Get privateKey from privateKeyPem
+  const privateKey = getPrivateKeyFromPem(privateKeyPem);
+
+  // Recovery raw password from encrypted password
+  const password = recoveryRawPasswordFromEncryptedPassword(
+    privateKey,
+    req.body.encryptedPassword
+  );
+
   const newUser = new UserRepository();
 
-  newUser.encodingPrivateKey(req.body.password);
+  newUser.encodingPrivateKey(password);
   newUser.email = req.body.email;
   newUser.username = req.body.username;
   newUser.title = req.body.title;
