@@ -46,6 +46,12 @@ UserSchema.methods.recoveryPrivateKey = function (password) {
   return privateKey;
 };
 
+UserSchema.methods.toJSON = function () {
+  var obj = this.toObject();
+  delete obj.encryptedPrivateKey;
+  return obj;
+};
+
 const User = mongoose.model("User", UserSchema);
 
 export default User;

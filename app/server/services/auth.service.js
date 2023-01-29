@@ -50,7 +50,7 @@ const login = async (req, res) => {
 
   if (!privateKey) {
     res.status(400).send({
-      message: "Invalid private key",
+      message: "Invalid password",
     });
   }
 

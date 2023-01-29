@@ -7,27 +7,17 @@
     <title>Document</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/forge/1.3.1/forge.min.js"></script>
     <script>
-      const PKI = forge.pki;
-      const MD = forge.md;
-      const publicKeyPem = `
-        -----BEGIN PUBLIC KEY-----
-  MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA3kcYa65r7jK0qp7oxUjW
-  4ESbqCWNfjHWtplROwG3Nt8a0SdPfp9buHOY1RLIY4PYPD/3CL89DwKSgj7y0fA0
-  rZY/FA/AkZBFyq/Dt8f2LBoqRg/Ai5HSpvvaY6AgVYCfgMOdLvMOubAAXs9z/07W
-  B2M5+rOG0F55LmMJ1Upl1DitgnOhQmj/DPW7UjYI8N9wBrbR6DMW4Qhmv6PdEvmG
-  Ph20c8XQbrXiOexJCEoGTtPIvT0eP9KHVkpr7G2vQb3mzp+C0F4K47iVzO5igo3y
-  rca7AAemnRz8yflFbISoKD0wXLB5jH3LIvprREQgIVsL6o12KMyLU9BkigxfzrSQ
-  7QIDAQAB
-        -----END PUBLIC KEY-----
-  `;
-
       function login() {
+        const PKI = forge.pki;
+        const MD = forge.md;
+        const publicKeyPem = `-----BEGIN PUBLIC KEY-----MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA3kcYa65r7jK0qp7oxUjW4ESbqCWNfjHWtplROwG3Nt8a0SdPfp9buHOY1RLIY4PYPD/3CL89DwKSgj7y0fA0rZY/FA/AkZBFyq/Dt8f2LBoqRg/Ai5HSpvvaY6AgVYCfgMOdLvMOubAAXs9z/07WB2M5+rOG0F55LmMJ1Upl1DitgnOhQmj/DPW7UjYI8N9wBrbR6DMW4Qhmv6PdEvmGPh20c8XQbrXiOexJCEoGTtPIvT0eP9KHVkpr7G2vQb3mzp+C0F4K47iVzO5igo3yrca7AAemnRz8yflFbISoKD0wXLB5jH3LIvprREQgIVsL6o12KMyLU9BkigxfzrSQ7QIDAQAB-----END PUBLIC KEY-----`;
+
         const email = document.getElementById("email").value;
         const password = document.getElementById("password").value;
 
         const publicKey = PKI.publicKeyFromPem(publicKeyPem);
         const encryptedPassword = publicKey.encrypt(
-          password,
+          password.trim(),
           "RSAES-PKCS1-V1_5"
         );
 
@@ -53,12 +43,16 @@
       }
 
       function signup() {
+        const PKI = forge.pki;
+        const MD = forge.md;
+        const publicKeyPem = `-----BEGIN PUBLIC KEY-----MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA3kcYa65r7jK0qp7oxUjW4ESbqCWNfjHWtplROwG3Nt8a0SdPfp9buHOY1RLIY4PYPD/3CL89DwKSgj7y0fA0rZY/FA/AkZBFyq/Dt8f2LBoqRg/Ai5HSpvvaY6AgVYCfgMOdLvMOubAAXs9z/07WB2M5+rOG0F55LmMJ1Upl1DitgnOhQmj/DPW7UjYI8N9wBrbR6DMW4Qhmv6PdEvmGPh20c8XQbrXiOexJCEoGTtPIvT0eP9KHVkpr7G2vQb3mzp+C0F4K47iVzO5igo3yrca7AAemnRz8yflFbISoKD0wXLB5jH3LIvprREQgIVsL6o12KMyLU9BkigxfzrSQ7QIDAQAB-----END PUBLIC KEY-----`;
+
         const email = document.getElementById("email").value;
         const password = document.getElementById("password").value;
 
         const publicKey = PKI.publicKeyFromPem(publicKeyPem);
         const encryptedPassword = publicKey.encrypt(
-          password,
+          password.trim(),
           "RSAES-PKCS1-V1_5"
         );
 
