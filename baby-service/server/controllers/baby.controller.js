@@ -6,7 +6,7 @@ const router = express.Router();
 
 const AuthController = (app) => {
   router.get("/", (req, res) => {
-    res.send("Weclome to Single Sign-On on Baby Application");
+    res.send("Weclome to Single Sign-On on Baby Service");
   });
 
   router.get(

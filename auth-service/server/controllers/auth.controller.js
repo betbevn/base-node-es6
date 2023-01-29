@@ -5,7 +5,7 @@ const router = express.Router();
 
 const AuthController = (app) => {
   router.get("/", (req, res) => {
-    res.send("Weclome to Single Sign-On on Auth Application");
+    res.send("Weclome to Single Sign-On on Auth Service");
   });
 
   router.get(
